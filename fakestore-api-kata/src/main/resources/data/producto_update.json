@@ -1,0 +1,7 @@
+{
+  "title": "Producto Actualizado",
+  "price": 149.99,
+  "description": "Descripción actualizada del producto",
+  "image": "https://example.com/image2.png",
+  "category": "test-updated"
+}

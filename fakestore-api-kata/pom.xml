@@ -1,0 +1,57 @@
+<!-- Archivo de configuración de Maven: aquí se definen las dependencias y plugins necesarios para compilar y probar el proyecto -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.daniel.api</groupId>
+    <artifactId>fakestore-api-kata</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- Dependencias necesarias para pruebas y consumo de APIs -->
+    <dependencies>
+        <!-- JUnit 5: Framework de pruebas unitarias moderno -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- REST Assured: Alternativa para pruebas de APIs REST (puedes usar Unirest o REST Assured) -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JSON Simple: Para manipular JSON si lo necesitas -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <!-- Unirest: Cliente HTTP sencillo para Java, ideal para pruebas de APIs -->
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.14.5</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Configuración de plugins de build, especialmente para ejecutar pruebas -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
