@@ -1,0 +1,7 @@
+{
+  "title": "Producto de prueba POST",
+  "price": 19.99,
+  "description": "Este es un producto creado por Gatling",
+  "image": "https://i.pravatar.cc",
+  "category": "electronics"
+}

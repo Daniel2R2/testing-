@@ -1,0 +1,7 @@
+{
+  "title": "Producto actualizado PUT",
+  "price": 29.99,
+  "description": "Este es un producto actualizado por Gatling",
+  "image": "https://i.pravatar.cc",
+  "category": "electronics"
+}

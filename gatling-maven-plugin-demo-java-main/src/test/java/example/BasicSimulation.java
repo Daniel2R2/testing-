@@ -1,35 +1,51 @@
 package example;
 
+import io.gatling.javaapi.core.*;
+
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-import io.gatling.javaapi.core.*;
-import io.gatling.javaapi.http.*;
-
 public class BasicSimulation extends Simulation {
 
-  // Load VU count from system properties
-  // Reference: https://docs.gatling.io/guides/passing-parameters/
-  private static final int vu = Integer.getInteger("vu", 1);
+    // Escenario con nombre personalizado para mostrar "kata evaluación" en el menú
+    ScenarioBuilder kataScenario = scenario("kata evaluación")
+        .exec(
+            http("GET Products")
+                .get("https://fakestoreapi.com/products")
+                .check(status().is(200))
+        )
+        .pause(1)
+        .exec(
+            http("POST Product")
+                .post("https://fakestoreapi.com/products")
+                .body(StringBody("{\"title\":\"Producto de prueba POST\",\"price\":19.99,\"description\":\"Este es un producto creado por Gatling\",\"image\":\"https://i.pravatar.cc\",\"category\":\"electronics\"}")).asJson()
+                .check(status().in(200, 201))
+        )
+        .pause(1)
+        .exec(
+            http("PUT Product")
+                .put("https://fakestoreapi.com/products/1")
+                .body(StringBody("{\"title\":\"Producto actualizado PUT\",\"price\":29.99,\"description\":\"Este es un producto actualizado por Gatling\",\"image\":\"https://i.pravatar.cc\",\"category\":\"electronics\"}")).asJson()
+                .check(status().is(200))
+        )
+        .pause(1)
+        .exec(
+            http("DELETE Product")
+                .delete("https://fakestoreapi.com/products/1")
+                .check(status().is(200))
+        );
 
-  // Define HTTP configuration
-  // Reference: https://docs.gatling.io/reference/script/protocols/http/protocol/
-  private static final HttpProtocolBuilder httpProtocol = http.baseUrl("https://api-ecomm.gatling.io")
-      .acceptHeader("application/json")
-      .userAgentHeader(
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36");
-
-  // Define scenario
-  // Reference: https://docs.gatling.io/reference/script/core/scenario/
-  private static final ScenarioBuilder scenario = scenario("Scenario").exec(http("Session").get("/session"));
-
-  // Define assertions
-  // Reference: https://docs.gatling.io/reference/script/core/assertions/
-  private static final Assertion assertion = global().failedRequests().count().lt(1L);
-
-  // Define injection profile and execute the test
-  // Reference: https://docs.gatling.io/reference/script/core/injection/
-  {
-    setUp(scenario.injectOpen(atOnceUsers(vu))).assertions(assertion).protocols(httpProtocol);
-  }
+    {
+        setUp(
+            kataScenario.injectOpen(
+                atOnceUsers(1),
+                rampUsers(1).during(5),
+                constantUsersPerSec(1).during(5)
+            ),
+            kataScenario.injectClosed(
+                constantConcurrentUsers(1).during(5),
+                rampConcurrentUsers(1).to(2).during(5)
+            )
+        );
+    }
 }
