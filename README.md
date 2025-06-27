@@ -49,14 +49,7 @@ Realizar pruebas de rendimiento sobre la API usando Gatling, simulando tráfico 
 **Estructura del proyecto:**
 
 gatling-maven-plugin-demo-java-main/
-├── src/
-│ └── test/
-│ ├── java/
-│ │ └── simulations/
-│ │ └── FakeStoreSimulation.java
-│ └── resources/
-│ └── data/
-│ └── producto.json
+
 
 
 **Ejecución:**
